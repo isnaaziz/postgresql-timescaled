@@ -1,0 +1,22 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: timescaledb
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=enviro2026
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ENVIRO
+      # Opsi Tuning Otomatis (Sangat disarankan untuk performa)
+      - TS_TUNE_MEMORY=2GB  # Sesuaikan dengan RAM yang ingin dialokasikan
+      - TS_TUNE_NUM_CPUS=2  # Sesuaikan dengan jumlah Core CPU
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./tsdb_data:/var/lib/postgresql/data
+    networks:
+      - db_net
+
+networks:
+  db_net:
+    driver: bridge
